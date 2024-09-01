@@ -1,35 +1,42 @@
-FROM php:8.1-fpm
+# Usa una imagen base de PHP 8.2 con Apache
+FROM php:8.2-apache
 
-# Instalar dependencias
+# Instala dependencias del sistema y extensiones de PHP
 RUN apt-get update && apt-get install -y \
     libpng-dev \
-    libjpeg62-turbo-dev \
+    libjpeg-dev \
     libfreetype6-dev \
-    libzip-dev \
     zip \
-    unzip
+    unzip \
+    git \
+    libzip-dev \
+    libicu-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql zip intl exif bcmath
 
-# Configurar e instalar extensiones PHP
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-install pdo pdo_mysql gd zip
+# Instala Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Instalar Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Configura Apache
+RUN a2enmod rewrite
 
-# Establecer directorio de trabajo
+# Establece el directorio de trabajo
 WORKDIR /var/www/html
 
-# Copiar archivos de la aplicación
+# Copia los archivos del proyecto
 COPY . .
 
-# Instalar dependencias
+# Instala dependencias de Composer
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Configurar permisos
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Genera la key de la aplicación
+RUN php artisan key:generate
 
-# Exponer puerto
-EXPOSE 8000
+# Configura los permisos
+RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Comando para iniciar la aplicación
-CMD php artisan serve --host=0.0.0.0 --port=8000
+# Expone el puerto 80
+EXPOSE 80
+
+# Comando para iniciar Apache
+CMD ["apache2-foreground"]
