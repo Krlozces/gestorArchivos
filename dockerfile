@@ -38,8 +38,12 @@ RUN php artisan key:generate
 # Configura los permisos
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Expone el puerto 80
-EXPOSE 80
+# Crea un script de inicio
+RUN echo '#!/bin/bash\n\
+sed -i "s|Listen 80|Listen ${PORT:-80}|g" /etc/apache2/ports.conf\n\
+sed -i "s|:80|:${PORT:-80}|g" /etc/apache2/sites-available/000-default.conf\n\
+apache2-foreground' > /usr/local/bin/start-apache2.sh \
+    && chmod +x /usr/local/bin/start-apache2.sh
 
 # Comando para iniciar Apache
-CMD ["apache2-foreground"]
+CMD ["/usr/local/bin/start-apache2.sh"]
