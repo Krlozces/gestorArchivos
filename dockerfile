@@ -1,35 +1,43 @@
-FROM php:8.1-fpm
+# Establecer la imagen base
+FROM php:8.2-fpm
 
-# Instalar dependencias
+# Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
+    git \
+    curl \
     libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    libzip-dev \
+    libonig-dev \
+    libxml2-dev \
     zip \
-    unzip
-
-# Configurar e instalar extensiones PHP
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-install pdo pdo_mysql gd zip
+    unzip \
+    libzip-dev \
+    libpq-dev \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Establecer directorio de trabajo
-WORKDIR /var/www/html
+# Establecer el directorio de trabajo
+WORKDIR /var/www
 
-# Copiar archivos de la aplicación
+# Copiar el contenido del proyecto
 COPY . .
 
-# Instalar dependencias
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+# Instalar las dependencias de PHP
+RUN composer install --no-dev --optimize-autoloader
 
-# Configurar permisos
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Copiar el archivo de entorno de producción
+COPY .env.example .env
 
-# Exponer puerto
-EXPOSE 8000
+# Generar la clave de la aplicación
+RUN php artisan key:generate
 
-# Comando para iniciar la aplicación
-CMD php artisan serve --host=0.0.0.0 --port=8000
+# Ejecutar las migraciones y los seeders (si es necesario)
+RUN php artisan migrate --force
+
+# Cambiar los permisos de la carpeta de almacenamiento y bootstrap/cache
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+
+# Exponer el puerto 9000 y ejecutar PHP-FPM
+EXPOSE 9000
+CMD ["php-fpm"]
