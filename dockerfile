@@ -26,6 +26,9 @@ WORKDIR /var/www/html
 # Copia los archivos del proyecto
 COPY . .
 
+# Copia el archivo .env.example a .env si .env no existe
+RUN cp -n .env.example .env || true
+
 # Instala dependencias de Composer
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
