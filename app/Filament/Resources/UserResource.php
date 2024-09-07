@@ -41,6 +41,7 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->required()
+                    ->hiddenOn('edit')
                     ->maxLength(255),
             ]);
     }
@@ -50,7 +51,7 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('NAME')
+                    ->label('NOMBRE')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->label('EMAIL')
