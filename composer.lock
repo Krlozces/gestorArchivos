@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0905124ebfb9c8bc306ddafcde234d7b",
+    "content-hash": "16c24887283b0dca1f5f7d9948e19377",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -71,6 +71,53 @@
                 "source": "https://github.com/AnourValar/eloquent-serialize/tree/1.2.23"
             },
             "time": "2024-07-12T10:52:26+00:00"
+        },
+        {
+            "name": "aprendible/storage-link-route",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aprendible/storage-link-route.git",
+                "reference": "70ddbb810828c1b8721b741da760c1c8107ff41f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aprendible/storage-link-route/zipball/70ddbb810828c1b8721b741da760c1c8107ff41f",
+                "reference": "70ddbb810828c1b8721b741da760c1c8107ff41f",
+                "shasum": ""
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Aprendible\\StorageLinkRoute\\StorageLinkRouteServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Aprendible\\StorageLinkRoute\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jorge García",
+                    "email": "jorge@aprendible.com"
+                }
+            ],
+            "description": "A route to create a symlink from 'public/storage' to 'storage/app/public'",
+            "support": {
+                "issues": "https://github.com/aprendible/storage-link-route/issues",
+                "source": "https://github.com/aprendible/storage-link-route/tree/1.0.1"
+            },
+            "time": "2019-10-30T17:51:38+00:00"
         },
         {
             "name": "bezhansalleh/filament-language-switch",
