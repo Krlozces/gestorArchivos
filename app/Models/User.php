@@ -12,9 +12,12 @@ use Filament\Models\Contracts\FilamentUser;
 use Spatie\Permission\Traits\HasRoles;
 use TomatoPHP\FilamentMediaManager\Traits\InteractsWithMediaFolders;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles, HasPanelShield, InteractsWithMediaFolders;
+    use HasFactory, Notifiable; 
+    use HasRoles; 
+    // use HasPanelShield; 
+    use InteractsWithMediaFolders;
 
     /**
      * The attributes that are mass assignable.
