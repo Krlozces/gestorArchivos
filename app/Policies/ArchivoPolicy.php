@@ -105,4 +105,12 @@ class ArchivoPolicy
     {
         return $user->can('reorder_archivo');
     }
+
+    /**
+     * Determine wheter the user can download.
+     */
+    public function download(User $user): bool
+    {
+        return $user->can('download_archivo');
+    }
 }

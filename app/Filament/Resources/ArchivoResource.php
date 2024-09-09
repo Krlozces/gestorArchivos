@@ -7,6 +7,7 @@ use Filament\Tables;
 use App\Models\Archivo;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Spatie\Permission\Guard;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\FileUpload;
@@ -16,8 +17,9 @@ use App\Filament\Resources\ArchivoResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use TomatoPHP\FilamentMediaManager\Form\MediaManagerInput;
 use App\Filament\Resources\ArchivoResource\RelationManagers;
+use BezhanSalleh\FilamentShield\Contracts\HasShieldPermissions;
 
-class ArchivoResource extends Resource
+class ArchivoResource extends Resource implements HasShieldPermissions
 {
     protected static ?string $model = Archivo::class;
 
@@ -53,7 +55,7 @@ class ArchivoResource extends Resource
                     ->disk('public')
                     ->directory('uploads')
                     ->visibility('public')
-                    ->downloadable()
+                    // ->downloadable()
                     ->columnSpanFull(),
             ]);
     }
@@ -102,11 +104,12 @@ class ArchivoResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Action::make('download') // Define la acción de descarga
-                    ->label('Descargar') // Texto que aparecerá en el botón
+                Action::make('download')
+                    ->label('Descargar')
                     ->icon('heroicon-o-arrow-down-tray') // Icono para el botón
                     ->url(fn (Archivo $record) => route('documentos.download', $record->id)) // Genera la URL de descarga
-                    ->openUrlInNewTab(), // (Opcional) Abre la URL en una nueva pestaña
+                    ->openUrlInNewTab() // (Opcional) Abre la URL en una nueva pestaña
+                    ->visible(auth()->user()->can('download_archivo')), 
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -129,6 +132,19 @@ class ArchivoResource extends Resource
             'create' => Pages\CreateArchivo::route('/create'),
             'view' => Pages\ViewArchivo::route('/{record}'),
             'edit' => Pages\EditArchivo::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getPermissionPrefixes(): array
+    {
+        return [
+            'view',
+            'view_any',
+            'create',
+            'update',
+            'delete',
+            'delete_any',
+            'download'
         ];
     }
 }
