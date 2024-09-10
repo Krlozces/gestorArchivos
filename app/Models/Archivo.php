@@ -14,6 +14,7 @@ class Archivo extends Model
         'titulo',
         'descripcion',
         'categoria_id',
+        'area_id',
         'ruta',
         'fecha'
     ];
@@ -27,5 +28,9 @@ class Archivo extends Model
     public function getNombreArchivoAttribute()
     {
         return basename($this->ruta); // Devuelve solo el nombre del archivo
+    }
+
+    public function area(){
+        return $this->belongsTo(Area::class);
     }
 }
