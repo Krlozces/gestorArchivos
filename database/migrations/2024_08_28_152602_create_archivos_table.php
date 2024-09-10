@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('descripcion');
             $table->unsignedBigInteger('categoria_id');
             $table->foreign('categoria_id')->references('id')->on('categorias');
+            $table->unsignedBigInteger('area_id');
+            $table->foreign('area_id')->references('id')->on('areas');
             $table->string('ruta');
             $table->date('fecha');
             $table->timestamps();
