@@ -63,7 +63,7 @@ class ArchivoPolicy
      */
     public function forceDelete(User $user, Archivo $archivo): bool
     {
-        return $user->can('force_delete_archivo');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -71,7 +71,7 @@ class ArchivoPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_archivo');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -79,7 +79,7 @@ class ArchivoPolicy
      */
     public function restore(User $user, Archivo $archivo): bool
     {
-        return $user->can('restore_archivo');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -87,7 +87,7 @@ class ArchivoPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_archivo');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -95,7 +95,7 @@ class ArchivoPolicy
      */
     public function replicate(User $user, Archivo $archivo): bool
     {
-        return $user->can('replicate_archivo');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -103,14 +103,6 @@ class ArchivoPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_archivo');
-    }
-
-    /**
-     * Determine wheter the user can download.
-     */
-    public function download(User $user): bool
-    {
-        return $user->can('download_archivo');
+        return $user->can('{{ Reorder }}');
     }
 }
