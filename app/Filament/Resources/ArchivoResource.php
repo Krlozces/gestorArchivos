@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use Filament\Forms;
+use App\Models\Area;
 use Filament\Tables;
 use App\Models\Archivo;
 use Filament\Forms\Form;
@@ -46,6 +47,11 @@ class ArchivoResource extends Resource implements HasShieldPermissions
                     ->searchable()
                     ->preload()
                     ->required(),
+                Forms\Components\Select::make('area_id')
+                    ->relationship(name: 'area', titleAttribute: 'nombre')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
                 Forms\Components\DatePicker::make('fecha')
                     ->required(),
                 FileUpload::make('ruta')
@@ -75,6 +81,9 @@ class ArchivoResource extends Resource implements HasShieldPermissions
                     ->searchable(),
                 Tables\Columns\TextColumn::make('categoria.nombre')
                     ->label('CATEGORIA')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('area.nombre')
+                    ->label('AREA')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('ruta')
                     ->label('DOCUMENTO')
@@ -144,7 +153,16 @@ class ArchivoResource extends Resource implements HasShieldPermissions
             'update',
             'delete',
             'delete_any',
-            'download'
+            'download',
+            'scale', // Balanzas
+            'assistant', // Asistente de gerencia
+            'management', // Gerencia
+            'treasury', // Tesoreria
+            'accounting', // Contabilidad
+            'resources', // Recursos humanos
+            'maintenance', // Mantenimiento
+            'sanitation', // Calidad y Saneamiento
+            'hotel', // Hotel
         ];
     }
 }
