@@ -26,7 +26,7 @@ class ArchivoResource extends Resource implements HasShieldPermissions
 
     protected static ?string $navigationIcon = 'heroicon-o-document';
 
-    protected static ?string $navigationGroup = 'Content';
+    protected static ?string $navigationGroup = 'Contentido';
 
     public static function form(Form $form): Form
     {
@@ -57,7 +57,7 @@ class ArchivoResource extends Resource implements HasShieldPermissions
                 FileUpload::make('ruta')
                     ->required()
                     ->preserveFileNames()
-                    ->maxSize('400000')
+                    ->maxSize(204800)
                     ->disk('public')
                     ->directory('uploads')
                     ->visibility('public')
@@ -154,15 +154,6 @@ class ArchivoResource extends Resource implements HasShieldPermissions
             'delete',
             'delete_any',
             'download',
-            'scale', // Balanzas
-            'assistant', // Asistente de gerencia
-            'management', // Gerencia
-            'treasury', // Tesoreria
-            'accounting', // Contabilidad
-            'resources', // Recursos humanos
-            'maintenance', // Mantenimiento
-            'sanitation', // Calidad y Saneamiento
-            'hotel', // Hotel
         ];
     }
 }
