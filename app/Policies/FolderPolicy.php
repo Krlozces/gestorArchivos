@@ -63,7 +63,7 @@ class FolderPolicy
      */
     public function forceDelete(User $user, Folder $folder): bool
     {
-        return $user->can('force_delete_folder');
+        return $user->can('{{ ForceDelete }}');
     }
 
     /**
@@ -71,7 +71,7 @@ class FolderPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_folder');
+        return $user->can('{{ ForceDeleteAny }}');
     }
 
     /**
@@ -79,7 +79,7 @@ class FolderPolicy
      */
     public function restore(User $user, Folder $folder): bool
     {
-        return $user->can('restore_folder');
+        return $user->can('{{ Restore }}');
     }
 
     /**
@@ -87,7 +87,7 @@ class FolderPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_folder');
+        return $user->can('{{ RestoreAny }}');
     }
 
     /**
@@ -95,7 +95,7 @@ class FolderPolicy
      */
     public function replicate(User $user, Folder $folder): bool
     {
-        return $user->can('replicate_folder');
+        return $user->can('{{ Replicate }}');
     }
 
     /**
@@ -103,6 +103,6 @@ class FolderPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_folder');
+        return $user->can('{{ Reorder }}');
     }
 }
