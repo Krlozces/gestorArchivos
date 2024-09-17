@@ -12,11 +12,11 @@ use Filament\Models\Contracts\FilamentUser;
 use Spatie\Permission\Traits\HasRoles;
 use TomatoPHP\FilamentMediaManager\Traits\InteractsWithMediaFolders;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     use HasFactory, Notifiable; 
     use HasRoles; 
-    // use HasPanelShield; 
+    use HasPanelShield; 
     use InteractsWithMediaFolders;
 
     /**
