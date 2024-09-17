@@ -20,18 +20,18 @@ class ListArchivos extends ListRecords
         $user = auth()->user();
     
         // Logueamos el permiso de gerencia como ejemplo
-        Log::info('Usuario: ' . $user->name . ' - Permiso view_management_archivo: ' . ($user->can('view_management_archivo') ? 'Sí' : 'No'));
+        Log::info('Usuario: ' . $user->name . ' - Permiso view_management_archivo: ' . ($user->can('management_area') ? 'Sí' : 'No'));
     
         $areas = [
-            'scale_archivo' => 'Balanzas',
-            'assistant_archivo' => 'Asistente de gerencia',
-            'management_archivo' => 'Gerencia',
-            'treasury_archivo' => 'Tesoreria',
-            'accounting_archivo' => 'Contabilidad',
-            'resources_archivo' => 'Recursos humanos',
-            'maintenance_archivo' => 'Mantenimiento',
-            'sanitation_archivo' => 'Calidad y Saneamiento',
-            'hotel_archivo' => 'Hotel',
+            'scale_area' => 'Balanzas',
+            'assistant_area' => 'Asistente de gerencia',
+            'management_area' => 'Gerencia',
+            'treasury_area' => 'Tesoreria',
+            'accounting_area' => 'Contabilidad',
+            'resources_area' => 'Recursos humanos',
+            'maintenance_area' => 'Mantenimiento',
+            'sanitation_area' => 'Calidad y Saneamiento',
+            'hotel_area' => 'Hotel',
         ];
     
         // Aplicamos los filtros basados en permisos
