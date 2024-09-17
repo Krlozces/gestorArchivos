@@ -78,6 +78,15 @@ class AreaResource extends Resource implements HasShieldPermissions
             'update',
             'delete',
             'delete_any',
+            'scale', // Balanzas
+            'assistant', // Asistente de gerencia
+            'management', // Gerencia
+            'treasury', // Tesoreria
+            'accounting', // Contabilidad
+            'resources', // Recursos humanos
+            'maintenance', // Mantenimiento
+            'sanitation', // Calidad y Saneamiento
+            'hotel', // Hotel
         ];
     }
 }
